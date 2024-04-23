@@ -4,6 +4,8 @@ Ligand-based virtual screening based on VSFlow pipeline
 
 ## Installation
 
+Todo: Install RDKIT 2019
+
 ```bash
 
 ```
