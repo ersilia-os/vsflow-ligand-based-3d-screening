@@ -29,8 +29,8 @@ def main() -> None:
         shutil.rmtree(output_folder)
     os.makedirs(output_folder)
 
-    results_file = os.path.join(output_folder, 'results.csv')
-    results_sdf = os.path.join(output_folder, 'results.sdf')
+    results_file = os.path.join(output_folder, 'vsflow_results.csv')
+    results_sdf = os.path.join(output_folder, 'vsflow_output.sdf')
     
     shutil.copy(output_tmp+"_1.sdf", results_sdf)
 
@@ -39,17 +39,17 @@ def main() -> None:
     for mol in reader:
         if mol is None:
             continue
-        index = mol.GetProp("_InputIndex")
+        name = mol.GetProp("_Name")
         smiles = Chem.MolToSmiles(mol)
         query_smiles = mol.GetProp("QuerySmiles")
         combo_score = mol.GetProp("Combo_Score")
         shape_sim = mol.GetProp("Shape_Similarity")
         fp_sim = mol.GetProp("3D_FP_Similarity")
-        R += [[index, smiles, query_smiles, combo_score, shape_sim, fp_sim]]
+        R += [[name, smiles, query_smiles, combo_score, shape_sim, fp_sim]]
 
     with open(results_file, "w") as f:
         writer = csv.writer(f)
-        header = ["InputIndex", "Smiles", "QuerySmiles", "ComboScore", "ShapeSim", "Fp3dSim"]
+        header = ["id","smiles", "querysmiles", "ComboScore", "ShapeSim", "Fp3dSim"]
         writer.writerow(header)
         for r in R:
             writer.writerow(r)
