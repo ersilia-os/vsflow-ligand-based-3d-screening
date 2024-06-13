@@ -10,8 +10,10 @@ Create a conda environment and install the following dependencies
 conda create -n vsflow python=3.11
 cd vsflow-ligand-based-3d-screening
 pip install -r requirements.txt
+pip install git+https://github.com/czodrowskilab/VSFlow
 conda install -c conda-forge pymol-open-source
 ```
+_Note: if you run the seutp.py you'll need to manually install the VSFlow repository and the pymol-open-source package via conda_
 
 ## Usage
 We provide an example usage. We recommend using the [smiles-to-3d](https://github.com/ersilia-os/smiles-to-3d) repository to generate the sdf files. They must have a Name property.

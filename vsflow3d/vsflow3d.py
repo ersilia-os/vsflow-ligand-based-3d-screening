@@ -12,17 +12,11 @@ root = os.path.dirname(os.path.abspath(__file__))
 tmp_dir = tempfile.mkdtemp(prefix='vsflow3d-')
 
 
-def main() -> None:
-    args = parseArgs()
-
-    query_file = args.query_file
-    database_file = args.database_file
+def run_vsflow(query_file,database_file,output_folder, top_hits):
     output_tmp = os.path.join(tmp_dir, "output")
-    output_folder = args.output_folder
-    top_hits = int(args.top)
+    top_hits = int(top_hits)
 
     cmd = f'vsflow shape -i {query_file} -d {database_file} -o {output_tmp} -t {top_hits} --boost --nproc 12'
-
     subprocess.Popen(cmd, shell=True).wait()
 
     if os.path.exists(output_folder):
@@ -86,4 +80,5 @@ def parseArgs() -> argparse.Namespace:
 
 
 if __name__ == '__main__':
-    main()
+    args = parseArgs()
+    run_vsflow(args.query_file, args.database_file, args.output_folder, args.top)
