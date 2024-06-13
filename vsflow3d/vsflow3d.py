@@ -9,19 +9,19 @@ from rdkit import Chem
 
 root = os.path.dirname(os.path.abspath(__file__))
 
-tmp_dir = tempfile.mkdtemp(prefix='vsflow3d-')
 
 
-def run_vsflow(query_file,database_file,output_folder, top_hits):
+
+def run_vsflow(query_file,database_file,output_folder, top_hits=1000):
+    tmp_dir = tempfile.mkdtemp(prefix='vsflow3d-')
     output_tmp = os.path.join(tmp_dir, "output")
     top_hits = int(top_hits)
 
     cmd = f'vsflow shape -i {query_file} -d {database_file} -o {output_tmp} -t {top_hits} --boost --nproc 12'
     subprocess.Popen(cmd, shell=True).wait()
 
-    if os.path.exists(output_folder):
-        shutil.rmtree(output_folder)
-    os.makedirs(output_folder)
+    if not os.path.exists(output_folder):
+        os.makedirs(output_folder)
 
     results_file = os.path.join(output_folder, 'vsflow_results.csv')
     results_sdf = os.path.join(output_folder, 'vsflow_output.sdf')
